@@ -1,0 +1,65 @@
+def check_power_status(system_name):
+    """ตรวจสอบสถานะปัจจุบันของระบบไฟฟ้า."""
+    try:
+        with open(f"{system_name}_status.txt", "r") as f:
+            status = f.read().strip()
+            return status
+    except FileNotFoundError:
+        return "OFF" # ถือว่าปิดอยู่ถ้าไฟล์สถานะไม่พบ
+
+def set_power_status(system_name, status):
+    """ตั้งค่าสถานะของระบบไฟฟ้า."""
+    with open(f"{system_name}_status.txt", "w") as f:
+        f.write(status)
+    print(f"ระบบไฟฟ้า '{system_name}' ได้ถูกตั้งค่าเป็น: {status}")
+
+def turn_on_power(system_name):
+    """จำลองการเปิดระบบไฟฟ้า."""
+    current_status = check_power_status(system_name)
+    if current_status == "OFF":
+        print(f"กำลังดำเนินการเปิดระบบไฟฟ้า '{system_name}'...")
+        # ในระบบจริงขั้นตอนนี้จะมีการส่งคำสั่งไปยังอุปกรณ์ควบคุม
+        set_power_status(system_name, "ON")
+        print(f"ระบบไฟฟ้า '{system_name}' เปิดแล้ว")
+    else:
+        print(f"ระบบไฟฟ้า '{system_name}' เปิดอยู่แล้ว")
+
+def turn_off_power(system_name):
+    """จำลองการปิดระบบไฟฟ้า."""
+    current_status = check_power_status(system_name)
+    if current_status == "ON":
+        print(f"กำลังดำเนินการปิดระบบไฟฟ้า '{system_name}'...")
+        # ในระบบจริงขั้นตอนนี้จะมีการส่งคำสั่งไปยังอุปกรณ์ควบคุม
+        set_power_status(system_name, "OFF")
+        print(f"ระบบไฟฟ้า '{system_name}' ปิดแล้ว")
+    else:
+        print(f"ระบบไฟฟ้า '{system_name}' ปิดอยู่แล้ว")
+
+if __name__ == "__main__":
+    main_power_system = "MainGrid"
+    
+    print(f"สถานะปัจจุบันของ {main_power_system}: {check_power_status(main_power_system)}")
+    
+    # ลองเปิดระบบ
+    turn_on_power(main_power_system)
+    print(f"สถานะปัจจุบันของ {main_power_system}: {check_power_status(main_power_system)}")
+    
+    # ลองเปิดอีกครั้ง (ควรจะบอกว่าเปิดอยู่แล้ว)
+    turn_on_power(main_power_system)
+    print(f"สถานะปัจจุบันของ {main_power_system}: {check_power_status(main_power_system)}")
+    
+    # ลองปิดระบบ
+    turn_off_power(main_power_system)
+    print(f"สถานะปัจจุบันของ {main_power_system}: {check_power_status(main_power_system)}")
+    
+    # ลองปิดอีกครั้ง (ควรจะบอกว่าปิดอยู่แล้ว)
+    turn_off_power(main_power_system)
+    print(f"สถานะปัจจุบันของ {main_power_system}: {check_power_status(main_power_system)}")
+
+    print("\n--- การจำลองระบบย่อย ---")
+    sub_system = "LightingCircuit"
+    print(f"สถานะปัจจุบันของ {sub_system}: {check_power_status(sub_system)}")
+    turn_on_power(sub_system)
+    print(f"สถานะปัจจุบันของ {sub_system}: {check_power_status(sub_system)}")
+    turn_off_power(sub_system)
+    print(f"สถานะปัจจุบันของ {sub_system}: {check_power_status(sub_system)}")
