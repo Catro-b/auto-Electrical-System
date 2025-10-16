@@ -1,0 +1,21 @@
+esphome:
+  name: my_light_switch
+  platform: ESP8266 # หรือ ESP32
+  board: nodemcuv2
+
+wifi:
+  ssid: "Your_WiFi_SSID" 
+  password: "Your_WiFi_Password"
+
+# เพิ่ม OTA เพื่ออัปเดตเฟิร์มแวร์แบบไร้สาย
+ota:
+
+# เพิ่ม API เพื่อให้ Home Assistant เชื่อมต่อและควบคุมได้
+api:
+
+# กำหนดสวิตช์ (Relay)
+switch:
+  - platform: gpio
+    pin: D1 # ขา GPIO ที่รีเลย์ต่ออยู่ (อาจจะเป็น GPIO5 หรืออื่นๆ ขึ้นอยู่กับบอร์ด)
+    name: "Living Room Light"
+    id: living_room_light
